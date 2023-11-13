@@ -4,4 +4,4 @@
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting pj colored-man-pages ssh-agent oc you-should-use)
 
-PROJECT_PATHS=($HOME/projects /mnt/d/projects)
+#PROJECT_PATHS=($HOME/projects /mnt/d/projects)

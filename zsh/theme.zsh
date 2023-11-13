@@ -4,9 +4,9 @@
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
-DEFAULT_USER=jonas
+DEFAULT_USER=kounex
 
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
 typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time kubecontext time status)
 
@@ -221,7 +221,7 @@ typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=always
 #   - verbose: Enable instant prompt and print a warning when detecting console output during
 #              zsh initialization. Choose this if you've never tried instant prompt, haven't
 #              seen the warning, or if you are unsure what this all means.
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=verbose
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
 # Hot reload allows you to change POWERLEVEL9K options after Powerlevel10k has been initialized.
 # For example, you can type POWERLEVEL9K_BACKGROUND=red and see your prompt turn red. Hot reload

@@ -1,1 +1,1 @@
-PATH="/home/linuxbrew/.linuxbrew/sbin:/usr/local/opt/gettext/bin:$PATH"
+PATH="/opt/homebrew/bin:$PATH"
