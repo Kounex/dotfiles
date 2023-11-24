@@ -45,6 +45,8 @@ cask "visual-studio-code"
 cask "vlc"
 cask "obs"
 cask "android-studio"
+cask "openvpn-connect"
+cask "home-assistant"
 
 
 vscode "esbenp.prettier-vscode"
@@ -59,3 +61,4 @@ vscode "redhat.vscode-quarkus"
 vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"
 vscode "github.github-vscode-theme"
+vscode "vscjava.vscode-gradle"
