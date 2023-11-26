@@ -47,7 +47,7 @@ cask "obs"
 cask "android-studio"
 cask "openvpn-connect"
 cask "home-assistant"
-
+cask "licecap"
 
 vscode "esbenp.prettier-vscode"
 vscode "dart-code.flutter"
