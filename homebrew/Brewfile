@@ -21,7 +21,7 @@ brew "ssh-copy-id"
 brew "micro"
 brew "zsh"
 brew "cocoapods"
-
+brew "node"
 
 cask "balenaetcher"
 cask "caffeine"
