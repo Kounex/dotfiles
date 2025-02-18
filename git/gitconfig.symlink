@@ -37,4 +37,5 @@
 [init]
 	defaultBranch = main
 [user]
+        user = Kounex
 	email = r.schramowski@googlemail.com 
