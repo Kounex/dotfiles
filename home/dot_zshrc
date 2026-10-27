@@ -67,7 +67,7 @@ bindkey '^[[B' down-line-or-beginning-search
 
 # --- line-editor extras: only with a real terminal ---------------------------
 # Agent shells (no tty, no zle) skip these; they are keybindings and widgets.
-if [[ -o zle ]]; then
+if [[ -o zle && -t 0 && ${TERM:-dumb} != dumb ]]; then
   (( $+commands[fzf] )) && source <(fzf --zsh)
   _zp=~/.local/share/zsh/plugins
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
