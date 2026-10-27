@@ -11,7 +11,7 @@
 # Keep the format: one `name: "version"` per line, the board edits lines.
 tools:
   starship: "1.27.0"
-  fzf: "0.74.5"
+  fzf: "0.74.4"
   zoxide: "0.10.0"
   bat: "0.26.1"
   eza: "0.23.5"
