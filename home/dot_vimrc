@@ -1,0 +1,27 @@
+" Small, plugin-free defaults that work on every host's vim (incl. vim-tiny).
+set nocompatible
+set encoding=utf-8
+if has('syntax') | syntax on | endif
+filetype plugin indent on
+
+set number ruler showcmd laststatus=2 wildmenu scrolloff=5
+set hidden backspace=indent,eol,start
+set ignorecase smartcase incsearch hlsearch
+set expandtab tabstop=2 shiftwidth=2 softtabstop=2 autoindent
+set splitbelow splitright
+" clear search highlight
+nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
+
+" persistent undo, kept out of the working tree
+if has('persistent_undo')
+  let s:undo = expand('~/.vim/undo')
+  if !isdirectory(s:undo) | call mkdir(s:undo, 'p', 0700) | endif
+  let &undodir = s:undo
+  set undofile
+endif
+
+" jump to last position when reopening a file
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+" git commit messages: wrap body at 72
+autocmd FileType gitcommit setlocal textwidth=72 spell

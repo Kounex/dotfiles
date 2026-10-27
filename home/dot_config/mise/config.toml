@@ -1,0 +1,9 @@
+# Global mise tools (Mac). Projects pin their own in mise.toml/.tool-versions.
+# Ruby 3.4.2 carries fastlane + cocoapods for the iOS release builds.
+# Node stays on Homebrew for now (its global npm CLIs live there).
+[tools]
+ruby = "3.4.2"
+
+[settings]
+# read .ruby-version / .nvmrc / .java-version files too
+idiomatic_version_file_enable_tools = ["ruby", "node", "java"]

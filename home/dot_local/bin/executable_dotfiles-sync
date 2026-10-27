@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# dotfiles-sync [host...]: pull + apply the dotfiles on fleet hosts over SSH.
+# No arguments: every host below, plus this machine. Run after pushing a change.
+# Hosts are ~/.ssh/config aliases (see it-env/docs/ssh-mesh.md).
+set -uo pipefail
+
+HOSTS=(macbook nas hetzner hetzner-vps optiplex)
+[ $# -gt 0 ] && HOSTS=("$@")
+
+me=$(hostname -s)
+self_alias() { case "$1:$me" in macbook:Mac|nas:June) return 0 ;; esac; return 1; }
+
+apply='PATH=$HOME/.local/bin:/opt/homebrew/bin:$PATH chezmoi update --init --force --no-tty --no-pager'
+rc=0
+for h in "${HOSTS[@]}"; do
+  printf '\n== %s\n' "$h"
+  if self_alias "$h"; then
+    bash -c "$apply" || rc=1
+  else
+    ssh -o ConnectTimeout=8 -o BatchMode=yes "$h" "$apply" || { echo "!! $h failed"; rc=1; }
+  fi
+done
+exit $rc

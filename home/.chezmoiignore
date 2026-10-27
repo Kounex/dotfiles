@@ -1,0 +1,16 @@
+{{- /* Mac: zsh workstation. Linux: bash servers. */ -}}
+{{ if ne .chezmoi.os "darwin" }}
+.zshenv
+.zshrc
+.config/shell/flutter.sh
+.config/shell/macos.sh
+.config/homebrew
+.config/mise
+.local/bin/macos-defaults
+{{ end }}
+{{ if eq .chezmoi.os "darwin" }}
+.bashrc
+{{ end }}
+{{ if not (get (get .hosts .chezmoi.hostname | default dict) "agent") }}
+.local/bin/dotfiles-sync
+{{ end }}

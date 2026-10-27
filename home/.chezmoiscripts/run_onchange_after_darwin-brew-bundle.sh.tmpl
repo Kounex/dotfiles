@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Installs whatever the Brewfile lists but the Mac lacks. Never upgrades or removes.
+# Brewfile hash: {{ include "dot_config/homebrew/Brewfile" | sha256sum }}
+set -euo pipefail
+/opt/homebrew/bin/brew bundle install --no-upgrade --file="$HOME/.config/homebrew/Brewfile"
+{{ end -}}

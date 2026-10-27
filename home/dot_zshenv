@@ -1,0 +1,3 @@
+# Read by every zsh, including `ssh macbook 'cmd'`. Keep it to PATH only:
+# no output, nothing slow. Everything interactive lives in ~/.zshrc.
+source "$HOME/.config/shell/path.sh"

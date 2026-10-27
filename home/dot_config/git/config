@@ -1,0 +1,33 @@
+# Shared git config. Machine-local settings (credential helper, signing,
+# anything installers write) belong in ~/.gitconfig, which git reads after
+# this file and which is not managed here.
+[user]
+	name = Kounex
+	email = r.schramowski@googlemail.com
+[init]
+	defaultBranch = main
+[core]
+	editor = vim
+[color]
+	ui = auto
+[pull]
+	rebase = false
+[push]
+	default = simple
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[rebase]
+	autoStash = true
+[diff]
+	algorithm = histogram
+[merge]
+	conflictStyle = zdiff3
+[help]
+	autocorrect = prompt
+[alias]
+	co = checkout
+	st = status -sb
+	count = shortlog -sn
+	last = log -1 HEAD --stat
+	lg = log --graph --abbrev-commit --date=relative --pretty=format:'%C(red)%h%C(reset) %an: %s %C(yellow)%d%C(reset) %C(green)(%cr)%C(reset)'

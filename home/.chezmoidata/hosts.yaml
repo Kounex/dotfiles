@@ -1,0 +1,23 @@
+# Fleet hosts, keyed by `chezmoi data | jq .chezmoi.hostname` (short hostname).
+# `name` is what the prompt shows; `color` is its starship colour (name or 0-255);
+# `agent: true` marks agent hosts (they get dotfiles-sync to update the rest).
+# A host not listed here still works: prompt shows its real hostname in plain bold.
+# No IPs or secrets here, this repo is public.
+hosts:
+  Mac:
+    name: macbook
+    color: blue
+    agent: true
+  June:
+    name: june
+    color: yellow
+    agent: true
+  CentOS-90-stream-amd64-base:
+    name: hetzner
+    color: red
+  june-hetzner-ubuntu:
+    name: hetzner-vps
+    color: "208"
+  solaire:
+    name: optiplex
+    color: purple

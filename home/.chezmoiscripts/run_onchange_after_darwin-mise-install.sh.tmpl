@@ -1,0 +1,8 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Installs the global mise tools when their config changes.
+# mise config hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
+set -euo pipefail
+command -v mise >/dev/null || PATH=/opt/homebrew/bin:$PATH
+mise install --yes
+{{ end -}}

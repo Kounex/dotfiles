@@ -1,0 +1,45 @@
+# bash (Linux fleet hosts). Managed by chezmoi: edit the source in
+# github.com/Kounex/dotfiles, not this file. Machine-only additions go in
+# ~/.bashrc.local.
+
+# --- every shell, including `ssh host 'cmd'` -------------------------------------
+. "$HOME/.config/shell/path.sh"
+# Secrets and machine env, never in git.
+[ -r "$HOME/.localrc" ] && . "$HOME/.localrc"
+
+# --- interactive only from here -------------------------------------------------
+case $- in *i*) ;; *) return ;; esac
+
+# RHEL keeps its system-wide interactive setup here (Debian reads /etc/bash.bashrc itself).
+[ -f /etc/bashrc ] && . /etc/bashrc
+for f in /usr/share/bash-completion/bash_completion /etc/bash_completion; do
+  [ -r "$f" ] && { . "$f"; break; }
+done
+unset f
+
+# Agent and unattended shells: nobody answers an `rm -i` prompt (UGOS
+# /etc/profile and RHEL root defaults alias rm/cp/mv to -i). Fleet runners
+# export FLEET_UNATTENDED=1; Claude Code sets CLAUDECODE=1.
+if [ -n "$FLEET_UNATTENDED$CLAUDECODE" ]; then
+  unalias rm cp mv 2>/dev/null
+elif [ "$(id -u)" = 0 ]; then
+  alias rm='rm -i' cp='cp -i' mv='mv -i'
+fi
+
+HISTSIZE=100000
+HISTFILESIZE=100000
+HISTCONTROL=ignoreboth:erasedups
+HISTTIMEFORMAT='%F %T  '
+shopt -s histappend checkwinsize cmdhist globstar 2>/dev/null
+
+for f in "$HOME"/.config/shell/*.sh; do
+  case $f in */path.sh) ;; *) . "$f" ;; esac
+done
+unset f
+
+command -v zoxide   >/dev/null && eval "$(zoxide init bash)"
+command -v fzf      >/dev/null && eval "$(fzf --bash)"
+command -v starship >/dev/null && eval "$(starship init bash)"
+
+[ -r "$HOME/.bashrc.local" ] && . "$HOME/.bashrc.local"
+true

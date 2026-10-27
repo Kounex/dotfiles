@@ -1,0 +1,79 @@
+# Interactive zsh (Mac). Managed by chezmoi: edit with `chezmoi edit ~/.zshrc`.
+# Machine-only additions (installers love appending here) go in ~/.zshrc.local.
+
+# Secrets and machine env, never in git.
+[[ -r ~/.localrc ]] && source ~/.localrc
+
+# Again after /etc/zprofile's path_helper reordered PATH in login shells.
+source ~/.config/shell/path.sh
+
+# Topics: every ~/.config/shell/*.sh except path.sh
+for f in ~/.config/shell/*.sh(N); do
+  [[ $f == */path.sh ]] || source "$f"
+done
+unset f
+
+# --- options / history ------------------------------------------------------
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt EXTENDED_HISTORY INC_APPEND_HISTORY SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS HIST_IGNORE_SPACE HIST_VERIFY
+setopt AUTO_CD INTERACTIVE_COMMENTS COMPLETE_IN_WORD NO_BEEP NO_BG_NICE NO_HUP
+
+# --- completion ---------------------------------------------------------------
+# Completions for CLIs that only generate them at runtime: written once to the
+# cache, refreshed when the binary changes, instead of on every shell start.
+_zcomp_dir=~/.cache/zsh/completions
+_cache_completion() {
+  local bin=${commands[$1]} out=$_zcomp_dir/_$1
+  [[ -n $bin ]] || return 0
+  [[ -s $out && $out -nt $bin ]] && return 0
+  mkdir -p $_zcomp_dir && "$@" >| $out 2>/dev/null
+}
+_cache_completion oc oc completion zsh
+_cache_completion rosa rosa completion zsh
+fpath=($_zcomp_dir /opt/homebrew/share/zsh/site-functions $fpath)
+unset _zcomp_dir
+
+autoload -Uz compinit
+# Full security check at most once a day, cached dump otherwise.
+() {
+  setopt local_options extended_glob
+  if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then compinit; else compinit -C; fi
+}
+{ [[ ~/.zcompdump.zwc -nt ~/.zcompdump ]] || zcompile ~/.zcompdump } &!
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' menu select
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.cache/zsh/compcache
+zstyle ':completion:*:*:kill:*' menu yes select
+compdef "_files -W \$PROJECTS -/" c
+
+# --- keys ---------------------------------------------------------------------
+bindkey -e
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
+# --- tools --------------------------------------------------------------------
+(( $+commands[mise] ))     && eval "$(mise activate zsh)"
+(( $+commands[zoxide] ))   && eval "$(zoxide init zsh)"
+(( $+commands[fzf] ))      && source <(fzf --zsh)
+(( $+commands[starship] )) && eval "$(starship init zsh)"
+
+# --- plugins (pinned, fetched by chezmoi) ---------------------------------
+_zp=~/.local/share/zsh/plugins
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
+[[ -r $_zp/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source $_zp/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -r $_zp/zsh-you-should-use/you-should-use.plugin.zsh ]] && source $_zp/zsh-you-should-use/you-should-use.plugin.zsh
+# must be last
+[[ -r $_zp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source $_zp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+unset _zp
+
+[[ -r ~/.zshrc.local ]] && source ~/.zshrc.local
+true

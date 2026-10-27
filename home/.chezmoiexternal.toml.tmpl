@@ -1,0 +1,62 @@
+{{- /* Pinned downloads; versions live in .chezmoidata/tools.yaml. */ -}}
+{{- if eq .chezmoi.os "linux" }}
+{{-   if ne .chezmoi.arch "amd64" }}
+# no CLI tool binaries pinned for linux/{{ .chezmoi.arch }} yet
+{{-   else }}
+{{-     $t := .tools }}
+{{-     $triple := "x86_64-unknown-linux-musl" }}
+
+[".local/bin/starship"]
+type = "archive-file"
+url = "https://github.com/starship/starship/releases/download/v{{ $t.starship }}/starship-{{ $triple }}.tar.gz"
+path = "starship"
+executable = true
+
+[".local/bin/fzf"]
+type = "archive-file"
+url = "https://github.com/junegunn/fzf/releases/download/v{{ $t.fzf }}/fzf-{{ $t.fzf }}-linux_amd64.tar.gz"
+path = "fzf"
+executable = true
+
+[".local/bin/zoxide"]
+type = "archive-file"
+url = "https://github.com/ajeetdsouza/zoxide/releases/download/v{{ $t.zoxide }}/zoxide-{{ $t.zoxide }}-{{ $triple }}.tar.gz"
+path = "zoxide"
+executable = true
+
+[".local/bin/bat"]
+type = "archive-file"
+url = "https://github.com/sharkdp/bat/releases/download/v{{ $t.bat }}/bat-v{{ $t.bat }}-{{ $triple }}.tar.gz"
+path = "bat-v{{ $t.bat }}-{{ $triple }}/bat"
+executable = true
+
+[".local/bin/eza"]
+type = "archive-file"
+url = "https://github.com/eza-community/eza/releases/download/v{{ $t.eza }}/eza_{{ $triple }}.tar.gz"
+path = "eza"
+executable = true
+
+[".local/bin/rg"]
+type = "archive-file"
+url = "https://github.com/BurntSushi/ripgrep/releases/download/{{ $t.ripgrep }}/ripgrep-{{ $t.ripgrep }}-{{ $triple }}.tar.gz"
+path = "ripgrep-{{ $t.ripgrep }}-{{ $triple }}/rg"
+executable = true
+
+[".local/bin/fd"]
+type = "archive-file"
+url = "https://github.com/sharkdp/fd/releases/download/v{{ $t.fd }}/fd-v{{ $t.fd }}-{{ $triple }}.tar.gz"
+path = "fd-v{{ $t.fd }}-{{ $triple }}/fd"
+executable = true
+{{-   end }}
+{{- end }}
+
+{{- if eq .chezmoi.os "darwin" }}
+{{-   range $repo, $tag := .zsh_plugins }}
+
+[".local/share/zsh/plugins/{{ base $repo }}"]
+type = "archive"
+url = "https://github.com/{{ $repo }}/archive/refs/tags/{{ $tag }}.tar.gz"
+stripComponents = 1
+exact = true
+{{-   end }}
+{{- end }}

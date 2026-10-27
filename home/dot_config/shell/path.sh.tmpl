@@ -1,0 +1,31 @@
+# PATH for every bash/zsh, interactive or not (ssh host 'cmd' included).
+# Sourced from ~/.zshenv + ~/.zshrc (Mac) and the top of ~/.bashrc (Linux).
+# Safe to source repeatedly: an entry moves to the front, it's never duplicated.
+
+path_prepend() {
+  [ -d "$1" ] || return 0
+  local p=":$PATH:"
+  p=${p//:$1:/:}
+  p=${p#:}
+  p=${p%:}
+  PATH="$1${p:+:$p}"
+}
+
+# Lowest priority first; each call puts its dir in front of the previous ones.
+{{- if eq .chezmoi.os "darwin" }}
+path_prepend /opt/homebrew/sbin
+path_prepend /opt/homebrew/bin
+path_prepend "$HOME/development/third-party"
+path_prepend "$HOME/.pub-cache/bin"
+path_prepend "$HOME/development/flutter/sdk/bin"
+{{- end }}
+path_prepend "$HOME/bin"
+path_prepend "$HOME/.kimi-code/bin"
+path_prepend "$HOME/.local/bin"
+{{- if eq .chezmoi.os "darwin" }}
+# mise shims: tool versions for non-interactive shells. Interactive zsh
+# additionally runs `mise activate`, which puts real install dirs first.
+path_prepend "$HOME/.local/share/mise/shims"
+{{- end }}
+
+export PATH

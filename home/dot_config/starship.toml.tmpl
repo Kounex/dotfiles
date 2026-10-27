@@ -1,0 +1,76 @@
+{{- $h := get .hosts .chezmoi.hostname | default dict -}}
+{{- $color := get $h "color" | default "white" -}}
+# Same prompt on every host; only the host label and its colour differ
+# (.chezmoidata/hosts.yaml). Plain Unicode, no Nerd Font needed.
+"$schema" = "https://starship.rs/config-schema.json"
+
+add_newline = true
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$kubernetes\
+$cmd_duration\
+$jobs\
+$line_break\
+$status\
+$character"""
+
+[username]
+format = "[$user]($style)@"
+style_user = "dimmed"
+style_root = "bold red"
+
+[hostname]
+{{- if eq .chezmoi.os "darwin" }}
+ssh_only = true
+{{- else }}
+ssh_only = false
+{{- end }}
+format = "[$hostname]($style) "
+style = "bold {{ $color }}"
+{{- with get $h "name" }}
+aliases = { "{{ $.chezmoi.hostname }}" = "{{ . }}" }
+{{- end }}
+
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncate_to_repo = true
+read_only = " ro"
+
+[git_branch]
+format = "on [$branch]($style) "
+style = "bold purple"
+
+[git_status]
+style = "yellow"
+
+[kubernetes]
+disabled = false
+format = "[⎈ $context( \\($namespace\\))]($style) "
+style = "dimmed blue"
+# OpenShift contexts look like <ns>/api-<cluster>-<domain>:6443/<user>
+[[kubernetes.contexts]]
+context_pattern = "^[^/]+/api-(?P<var_cluster>[^-:]+)[^/]*/.*$"
+context_alias = "$var_cluster"
+
+[cmd_duration]
+min_time = 4000
+format = "took [$duration]($style) "
+style = "yellow"
+
+[jobs]
+symbol = "≡"
+
+[status]
+disabled = false
+format = "[$status]($style) "
+style = "red"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
