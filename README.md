@@ -49,7 +49,7 @@ Everything chezmoi deploys lives in `home/` (`.chezmoiroot`).
   or a setting for one machine only. Sourced last.
 - `~/.gitconfig`: per-host credential helper (`gh auth setup-git`, keychain).
 
-This repo is public: no secrets, IPs or private hostnames in tracked files.
+This repo is public: no secrets or IPs in tracked files (hostnames and ssh aliases are fine).
 
 ## History
 
