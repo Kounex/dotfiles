@@ -1,8 +1,14 @@
 # Pinned versions of what .chezmoiexternal.toml.tmpl downloads.
-# Linux servers get the CLI tools as static musl binaries in ~/.local/bin
-# (no distro packages, so UGOS / old Debian don't matter). The Mac gets the
-# same tools from Homebrew instead and only uses the zsh plugin entries.
-# Bump a version here, commit, then `dotfiles-sync` from June (see README).
+# Linux servers get the CLI tools (and chezmoi itself) as static musl
+# binaries in ~/.local/bin (no distro packages, so UGOS / old Debian don't
+# matter). The Mac gets the same tools from Homebrew instead and only uses
+# the zsh plugin entries.
+#
+# The fleet board (fleet.kounex.com, "Dotfiles tools") watches these pins,
+# commits bumps itself (patch + minor at 04:00, majors on a decision; chezmoi
+# patch only), runs `chezmoi update` on every host and reverts on failure.
+# Editing a pin by hand still works: push it and run `dotfiles-sync`.
+# Keep the format: one `name: "version"` per line, the board edits lines.
 tools:
   starship: "1.27.0"
   fzf: "0.74.5"
@@ -11,6 +17,7 @@ tools:
   eza: "0.23.5"
   ripgrep: "15.2.0"
   fd: "10.5.0"
+  chezmoi: "2.73.3"
 # Exact upstream git tags (their v-prefix habits differ), Mac only.
 zsh_plugins:
   zsh-users/zsh-autosuggestions: "v0.7.1"

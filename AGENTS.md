@@ -14,6 +14,8 @@ Hetzner, Hetzner VPS and Optiplex (bash). Human-facing overview in
 - This NAS clone (`~/agent/dotfiles`) is the working copy for edits. Each host
   applies from its own clone at `~/.local/share/chezmoi` (June included), so
   after pushing run `dotfiles-sync` to roll the change out.
+- **`git pull` before editing**: the fleet board commits pin bumps to `main`
+  by itself (author Kounex, message `chore(tools): …(fleet board)`).
 
 ## Rules
 
@@ -25,7 +27,9 @@ Hetzner, Hetzner VPS and Optiplex (bash). Human-facing overview in
 - **Nothing interactive or slow before the interactive guard** in `~/.bashrc`,
   and nothing but PATH in `~/.zshenv`. `ssh host 'cmd'` sources those.
 - **Pin every download** in `home/.chezmoidata/tools.yaml`, never "latest".
-  Same rule as container images (root AGENTS.md).
+  Same rule as container images (root AGENTS.md). The fleet board watches
+  these pins and updates them like images (see "Fleet board" below), so keep
+  one `name: "version"` per line; it edits by line.
 - **Linux tools come as static musl binaries** via `.chezmoiexternal.toml.tmpl`,
   never apt/dnf. UGOS (June) must not have packages installed (see
   `it-env/docs/machines/nas-ops.md`); Optiplex's Debian 11 is too old.
@@ -35,6 +39,19 @@ Hetzner, Hetzner VPS and Optiplex (bash). Human-facing overview in
   `chezmoi --source ~/agent/dotfiles --destination /tmp/x --cache /tmp/x.cache --persistent-state /tmp/x.db apply`
   renders for the local host (pick a different `--destination` and clean up
   after). `chezmoi execute-template` checks a single template.
+
+## Fleet board
+
+`fleet-board/updater/dotfiles.py` (since 2026-10-27) turns every pin in
+`tools.yaml` into an update unit on fleet.kounex.com ("Dotfiles tools").
+An update commits the new pin from the board's own clone
+(`~/.local/state/fleet-board-updater/dotfiles-repo`), runs `chezmoi update`
+on every host, checks `chezmoi verify`, the new version and that the shell
+starts, and reverts + re-syncs on any failure. Patch and minor bumps are
+automatic in the 04:00 window (0.x minors too: these are interactive-only
+tools), majors wait for a decision, chezmoi itself is patch-only automatic.
+Hosts that were offline catch up at the next check. A new pinned tool needs
+an entry in `TOOLS` there (repo, binary, version check).
 
 ## Hosts
 

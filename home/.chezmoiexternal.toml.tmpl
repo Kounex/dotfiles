@@ -47,6 +47,13 @@ type = "archive-file"
 url = "https://github.com/sharkdp/fd/releases/download/v{{ $t.fd }}/fd-v{{ $t.fd }}-{{ $triple }}.tar.gz"
 path = "fd-v{{ $t.fd }}-{{ $triple }}/fd"
 executable = true
+
+# chezmoi updates itself: the running binary is replaced by an atomic rename.
+[".local/bin/chezmoi"]
+type = "archive-file"
+url = "https://github.com/twpayne/chezmoi/releases/download/v{{ $t.chezmoi }}/chezmoi_{{ $t.chezmoi }}_linux-musl_amd64.tar.gz"
+path = "chezmoi"
+executable = true
 {{-   end }}
 {{- end }}
 
