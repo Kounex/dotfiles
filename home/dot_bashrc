@@ -3,6 +3,9 @@
 # ~/.bashrc.local.
 
 # --- every shell, including `ssh host 'cmd'` -------------------------------------
+# UGOS (June) exports GODEBUG=tlskyber=0 (/etc/profile.d/go.sh). Go 1.24 removed
+# that setting, and binaries built with newer Go abort on start (fzf, chezmoi).
+[ "${GODEBUG:-}" = "tlskyber=0" ] && unset GODEBUG
 . "$HOME/.config/shell/path.sh"
 # Secrets and machine env, never in git.
 [ -r "$HOME/.localrc" ] && . "$HOME/.localrc"
