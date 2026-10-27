@@ -63,17 +63,20 @@ bindkey '^[[B' down-line-or-beginning-search
 # --- tools --------------------------------------------------------------------
 (( $+commands[mise] ))     && eval "$(mise activate zsh)"
 (( $+commands[zoxide] ))   && eval "$(zoxide init zsh)"
-(( $+commands[fzf] ))      && source <(fzf --zsh)
 (( $+commands[starship] )) && eval "$(starship init zsh)"
 
-# --- plugins (pinned, fetched by chezmoi) ---------------------------------
-_zp=~/.local/share/zsh/plugins
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
-[[ -r $_zp/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source $_zp/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -r $_zp/zsh-you-should-use/you-should-use.plugin.zsh ]] && source $_zp/zsh-you-should-use/you-should-use.plugin.zsh
-# must be last
-[[ -r $_zp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source $_zp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-unset _zp
+# --- line-editor extras: only with a real terminal ---------------------------
+# Agent shells (no tty, no zle) skip these; they are keybindings and widgets.
+if [[ -o zle ]]; then
+  (( $+commands[fzf] )) && source <(fzf --zsh)
+  _zp=~/.local/share/zsh/plugins
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
+  [[ -r $_zp/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source $_zp/zsh-autosuggestions/zsh-autosuggestions.zsh
+  [[ -r $_zp/zsh-you-should-use/you-should-use.plugin.zsh ]] && source $_zp/zsh-you-should-use/you-should-use.plugin.zsh
+  # must be last
+  [[ -r $_zp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source $_zp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  unset _zp
+fi
 
 [[ -r ~/.zshrc.local ]] && source ~/.zshrc.local
 true
