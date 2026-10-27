@@ -13,7 +13,8 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply Kounex
 No prompts. It clones this repo to `~/.local/share/chezmoi` and writes the
 files below into `$HOME`. Existing files it replaces are overwritten, so
 back up a hand-edited `~/.bashrc` first. Add the host to
-`home/.chezmoidata/hosts.yaml` to give it a prompt name and colour.
+`home/.chezmoidata/hosts.yaml` to give it a prompt name and colour, and to
+`HOSTS` in the fleet board's `updater/dotfiles.py` so tool updates reach it.
 
 ## Day to day
 
@@ -24,6 +25,7 @@ back up a hand-edited `~/.bashrc` first. Add the host to
 | Commit and push | `chezmoi cd`, then git as usual |
 | Pull + apply on this host | `chezmoi update` |
 | Update the whole fleet (from June or the Mac) | `dotfiles-sync` (or `dotfiles-sync hetzner optiplex`) |
+| Update a pinned tool | Nothing to do: the fleet board bumps `tools.yaml` itself (patch/minor at 04:00, majors as a decision on fleet.kounex.com) |
 
 ## Layout
 
