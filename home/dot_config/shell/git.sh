@@ -1,7 +1,7 @@
 # git aliases (settings live in ~/.config/git/config).
 
 alias g='git'
-alias gs='git status -sb'
+alias gst='git status -sb'
 alias gd='git diff'
 alias gb='git branch'
 alias gc='git commit'

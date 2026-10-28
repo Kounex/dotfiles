@@ -24,6 +24,11 @@ Hetzner, Hetzner VPS and Optiplex (bash). Human-facing overview in
   unattended runs (`FLEET_UNATTENDED=1`) type plain commands and parse output.
   New names only (`ll`, `z`, `bat`). `~/.bashrc` drops rm/cp/mv `-i` aliases
   when `FLEET_UNATTENDED` or `CLAUDECODE` is set; keep that.
+  "Standard" includes any binary a package can install: `gs` was
+  `git status -sb` until Ghostscript (binary `gs`) came in, now `gst`
+  (2026-10-28). Before adding an alias, check the name with `command -v`;
+  before adding a package, check its binary names against the aliases in
+  `home/dot_config/shell/`.
 - **Nothing interactive or slow before the interactive guard** in `~/.bashrc`,
   and nothing but PATH in `~/.zshenv`. `ssh host 'cmd'` sources those.
 - **Pin every download** in `home/.chezmoidata/tools.yaml`, never "latest".
@@ -33,8 +38,11 @@ Hetzner, Hetzner VPS and Optiplex (bash). Human-facing overview in
 - **Linux tools come as static musl binaries** via `.chezmoiexternal.toml.tmpl`,
   never apt/dnf. UGOS (June) must not have packages installed (see
   `it-env/docs/machines/nas-ops.md`); Optiplex's Debian 11 is too old.
-- **Mac packages go through the Brewfile.** After a manual `brew install`,
-  refresh it (`brew bundle dump --force --file=…`, see the file header).
+- **Mac packages go through the Brewfile.** Asked to install something on the
+  Mac, add it here (push, `dotfiles-sync macbook`) instead of a bare
+  `brew install`; chezmoi then runs `brew bundle install --no-upgrade`. If
+  something was installed by hand, refresh the file (`brew bundle dump
+  --force --file=…`, see the file header).
 - Test template changes before pushing:
   `chezmoi --source ~/agent/dotfiles --destination /tmp/x --cache /tmp/x.cache --persistent-state /tmp/x.db apply`
   renders for the local host (pick a different `--destination` and clean up

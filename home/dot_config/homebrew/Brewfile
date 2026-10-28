@@ -26,6 +26,8 @@ brew "doppler"
 brew "ffmpeg"
 # GitHub command-line tool
 brew "gh"
+# Interpreter for PostScript and PDF (binary: gs)
+brew "ghostscript"
 # GIF image/animation creator/editor
 brew "gifsicle"
 # Distributed revision control system
