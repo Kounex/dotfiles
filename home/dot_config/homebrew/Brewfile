@@ -132,12 +132,16 @@ cask "android-studio"
 cask "audacity"
 # Tool to flash OS images to SD cards & USB drives
 cask "balenaetcher"
+# 3D creation suite (headless sprite rendering for extraction-arpg)
+cask "blender"
 # Utility that prevents the system from going to sleep
 cask "caffeine"
 # Voice and text chat software
 cask "discord"
 # Disk usage utility
 cask "disk-inventory-x"
+# .NET SDK (C# for the Godot .NET build)
+cask "dotnet-sdk"
 cask "droppy"
 # Web browser
 cask "firefox"
@@ -145,6 +149,8 @@ cask "font-awesome-terminal-fonts"
 cask "font-hack-nerd-font"
 cask "font-meslo-for-powerline"
 cask "font-source-code-pro"
+# Game engine, .NET (C#) build
+cask "godot-mono"
 # Web browser
 cask "google-chrome"
 # Desktop automation application
