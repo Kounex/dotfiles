@@ -189,8 +189,6 @@ cask "rectangle"
 cask "resilio-sync"
 # Open source virtual/remote desktop application
 cask "rustdesk"
-# Additional features and controls for Shure MV7 and MV88+ microphones
-cask "shureplus-motiv"
 # Instant messaging application focusing on security
 cask "signal"
 # Team communication and collaboration software
