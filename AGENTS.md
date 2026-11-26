@@ -72,7 +72,7 @@ real ones (`CentOS-90-stream-amd64-base` is the big Hetzner box,
 
 - Flutter SDK is a plain git clone at `~/development/flutter/sdk` (moved out
   of the old `~/.dotfiles/flutter/sdk` on 2026-10-27).
-- Ruby comes from mise (`~/.config/mise/config.toml`, 3.4.2 with fastlane and
-  cocoapods gems). rbenv/rvm/jenv are retired.
+- Ruby comes from mise (version pinned in `home/dot_config/mise/config.toml`,
+  i.e. `~/.config/mise/config.toml`; fastlane and cocoapods gems). rbenv/rvm/jenv are retired.
 - Node stays on Homebrew because its global npm CLIs live there.
 - `macos-defaults` is never run by chezmoi; it restarts Finder/Dock.
