@@ -32,7 +32,7 @@ Hetzner, Hetzner VPS and Optiplex (bash). Human-facing overview in
 - **Nothing interactive or slow before the interactive guard** in `~/.bashrc`,
   and nothing but PATH in `~/.zshenv`. `ssh host 'cmd'` sources those.
 - **Pin every download** in `home/.chezmoidata/tools.yaml`, never "latest".
-  Same rule as container images (root AGENTS.md). The fleet board watches
+  Same rule as container images (`it-env/docs/fleet-agents-shared.md` → Image tags). The fleet board watches
   these pins and updates them like images (see "Fleet board" below), so keep
   one `name: "version"` per line; it edits by line.
 - **Linux tools come as static musl binaries** via `.chezmoiexternal.toml.tmpl`,
